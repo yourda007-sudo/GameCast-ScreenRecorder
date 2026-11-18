@@ -17,7 +17,7 @@ jobs:
         run: |
           unzip -o *.zip
           sed -i 's/id = "org.jetbrains.kotlin", name = "kotlin-android"/id = "org.jetbrains.kotlin.android"/g' GameCastScreenRecorder/gradle/libs.versions.toml
-          sed -i 's/id = "org.jetbrains.kotlin", name = "kotlin-parcelize"/id = "org.jetbrains.kotlin.parcelize"/g' GameCastScreenRecorder/gradle/libs.versions.toml
+          sed -i 's/id = "org.jetbrains.kotlin", name = "kotlin-parcelize"/id = "org.jetbrains.kotlin.plugin.parcelize"/g' GameCastScreenRecorder/gradle/libs.versions.toml
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
