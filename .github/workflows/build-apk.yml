@@ -13,8 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Unzip project archive
-        run: unzip -o *.zip
+      - name: Unzip and patch Gradle plugins
+        run: |
+          unzip -o *.zip
+          sed -i 's/id = "org.jetbrains.kotlin", name = "kotlin-android"/id = "org.jetbrains.kotlin.android"/g' GameCastScreenRecorder/gradle/libs.versions.toml
+          sed -i 's/id = "org.jetbrains.kotlin", name = "kotlin-parcelize"/id = "org.jetbrains.kotlin.parcelize"/g' GameCastScreenRecorder/gradle/libs.versions.toml
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -26,6 +29,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+
+      - name: Accept Android SDK Licenses
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null 2>&1 || true
 
       - name: Build Debug APK
         working-directory: GameCastScreenRecorder
